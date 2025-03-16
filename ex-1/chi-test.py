@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.stats import chisquare
 
-sac_matrix = np.loadtxt("matrix.txt")
+sac_matrix = np.loadtxt("matrix_des.txt")
 
 # zmienia macierz w 1D, bo chi squared dziala na jednowymiarowych danych
 sac_values = sac_matrix.flatten()

@@ -1,10 +1,11 @@
 import secrets
 import numpy as np
-from Crypto.Cipher import AES
+from Crypto.Cipher import AES, DES
 from Crypto.Util.Padding import pad
 import struct
 
 AES_key = b'1234567890qwerty'  # 16 bajtów (128 bitów)
+DES_key =b'12345678' # 8 bajtow, 56 bitow
 matrix = np.zeros((64, 64))
 
 
@@ -32,6 +33,11 @@ def encrypt_aes(input_text, key):
     encrypted_message = cipher.encrypt(pad(input_text, 16))
     return bytes_to_bin(encrypted_message)
 
+def encrypt_des(input_text, key):
+    cipher = DES.new(key, DES.MODE_ECB)
+    encrypted_message = cipher.encrypt(pad(input_text, 8))
+    return bytes_to_bin(encrypted_message)
+
 
 def update_sac_matrix(original_binary, encrypted_messages, matrix):
     for i, encrypted_message in enumerate(encrypted_messages):
@@ -44,7 +50,7 @@ def update_sac_matrix(original_binary, encrypted_messages, matrix):
         # Poprawa dzialania xor
         xor_result_binary = bin(xor_result)[2:].zfill(len(original_binary))  # Upewniamy się, że wynik jest 64-bitowy
 
-        # Aktualizujemy macierz SAC: każdy kolejny wiersz macierzy to nowy xor
+        # każdy kolejny wiersz macierzy to nowy xor
         for j in range(64):
             if xor_result_binary[j] == '1':
                 matrix[i, j] += 1
@@ -55,22 +61,25 @@ for _ in range(2**20):
     input_text = text.to_bytes(8, byteorder="big")
     text_binary = bytes_to_bin(input_text)
 
-    # Szyfrowanie oryginalnego tekstu AES
-    aes_output = encrypt_aes(input_text, AES_key)
+    des_output = encrypt_des(input_text, DES_key)
+
+
+    # # Szyfrowanie oryginalnego tekstu AES
+    # aes_output = encrypt_aes(input_text, AES_key)
 
     # Generowanie wiadomości z pojedynczymi zmianami bitów
     flipped_messages = generate_bit_flips(text_binary)
 
     encrypted_messages = []
     for message in flipped_messages:
-        message_bytes = bin_to_bytes(message)  # Konwersja binarnej wiadomości na bajty
-        encrypted_message = encrypt_aes(message_bytes, AES_key)
+        message_bytes = bin_to_bytes(message)
+        encrypted_message = encrypt_des(message_bytes, DES_key)
         encrypted_messages.append(encrypted_message)
 
-    update_sac_matrix(aes_output, encrypted_messages, matrix)
+    update_sac_matrix(des_output, encrypted_messages, matrix)
 
 
-with open('matrix.txt', 'w') as f:
+with open('matrix_des.txt', 'w') as f:
     for row in matrix:
         f.write(' '.join(map(str, row)) + '\n')
 
@@ -78,5 +87,5 @@ with open('matrix.txt', 'w') as f:
 print("Random input as integer: ", text)
 print("Random input in bits: ", text_binary)
 print("Random input in bytes:", input_text)
-print("AES encryption result (in bits):", aes_output)
+print("DES encryption result (in bits):", des_output)
 print("SAC matrix after updates:\n", matrix)
