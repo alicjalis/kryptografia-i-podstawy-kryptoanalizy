@@ -1,0 +1,60 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.22"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "gcd",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "gcd::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gcd-Debug-3c8d37ef15f90f11d906.json",
+					"name" : "gcd",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/alicj/OneDrive/Pulpit/studia/2 STOPIEN/kryptografia-i-podstawy-kryptoanalizy/matma krypto/gcd/cmake-build-debug",
+		"source" : "C:/Users/alicj/OneDrive/Pulpit/studia/2 STOPIEN/kryptografia-i-podstawy-kryptoanalizy/matma krypto/gcd"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

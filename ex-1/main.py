@@ -4,8 +4,8 @@ from Crypto.Cipher import AES, DES
 from Crypto.Util.Padding import pad
 import struct
 
-AES_key = b'1234567890qwerty'  # 16 bajtów (128 bitów)
-DES_key =b'12345678' # 8 bajtow, 56 bitow
+AES_key = b'1234567890qwerty'  # 128 bitów
+DES_key =b'12345678' # 56 bitow
 matrix = np.zeros((64, 64))
 
 
@@ -48,7 +48,7 @@ def update_sac_matrix(original_binary, encrypted_messages, matrix):
         xor_result = int(original_binary, 2) ^ int(encrypted_message, 2)
 
         # Poprawa dzialania xor
-        xor_result_binary = bin(xor_result)[2:].zfill(len(original_binary))  # Upewniamy się, że wynik jest 64-bitowy
+        xor_result_binary = bin(xor_result)[2:].zfill(len(original_binary))
 
         # każdy kolejny wiersz macierzy to nowy xor
         for j in range(64):
@@ -61,10 +61,10 @@ for _ in range(2**20):
     input_text = text.to_bytes(8, byteorder="big")
     text_binary = bytes_to_bin(input_text)
 
+    # szyfrowanie wiadomosci des
     des_output = encrypt_des(input_text, DES_key)
 
-
-    # # Szyfrowanie oryginalnego tekstu AES
+    # # szyfrowanie wiadomosci AES
     # aes_output = encrypt_aes(input_text, AES_key)
 
     # Generowanie wiadomości z pojedynczymi zmianami bitów
