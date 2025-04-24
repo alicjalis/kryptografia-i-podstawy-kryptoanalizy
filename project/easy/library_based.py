@@ -7,7 +7,6 @@ private_key = ec.generate_private_key(
     ec.SECP384R1()
 
 )
-
 data = b"this is some data I'd like to sign"
 tampered_data = b"this is tampered data"
 
