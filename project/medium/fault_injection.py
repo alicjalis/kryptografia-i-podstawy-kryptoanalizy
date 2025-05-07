@@ -14,9 +14,9 @@ message2 = "second message"
 r2, s2 = generate_signature(message2, d, curve, k)
 
 if r1 == r2:
-    print("r1 and r2 are the same, potential nonce reuse vulnerability!")
+    print("r1 and r2 are the same")
 else:
-    print("r1 and r2 are different, no nonce reuse vulnerability.")
+    print("r1 and r2 are different")
 
 # Hash the messages
 z1 = int(hashlib.sha256(message1.encode()).hexdigest(), 16)

@@ -2,7 +2,6 @@ import hashlib
 import secrets
 from utils import get_p_256_params, EllipticCurve, modinv, generate_signature, verify_signature
 
-# ctrl alt l to format :3
 
 p, a, b, G, n = get_p_256_params()
 curve = EllipticCurve(p, a, b, G, n)
